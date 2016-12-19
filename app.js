@@ -1,17 +1,20 @@
 'use strict';
 // Module Dependencies
 // -------------------
-var express     = require('express');
-var logger      = require('morgan');
-var bodyParser  = require('body-parser');
-var http        = require('http');
-var JWT         = require('./lib/jwtDecoder.js');
-var path        = require('path');
-var request     = require('request');
-var routes      = require('./routes');
-var restActivity   = require('./routes/restActivity.js');
-var activityUtils    = require('./routes/activityUtils.js');
-var pkgjson     = require( './package.json' );
+var express         = require('express');
+var logger          = require('morgan');
+var bodyParser      = require('body-parser');
+var methodOverride  = require('method-override');
+var favicon         = require('serve-favicon');
+var errorhandler    = require('errorhandler')
+var http            = require('http');
+var JWT             = require('./lib/jwtDecoder.js');
+var path            = require('path');
+var request         = require('request');
+var routes          = require('./routes');
+var restActivity    = require('./routes/restActivity.js');
+var activityUtils   = require('./routes/activityUtils.js');
+var pkgjson         = require( './package.json' );
 
 var app = express();
 
@@ -49,14 +52,14 @@ app.use(logger);
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(express.methodOverride());
-app.use(express.favicon());
+app.use(methodOverride('X-HTTP-Method-Override'));
+app.use(favicon(__dirname + '/public/rest-activity/images/favicon.ico'));
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Express in Development Mode
 if ('development' == app.get('env')) {
-    app.use(express.errorHandler());
+    app.use(errorhandler());
 }
 
 /**
