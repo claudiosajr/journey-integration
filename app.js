@@ -2,6 +2,7 @@
 // Module Dependencies
 // -------------------
 var express     = require('express');
+var logger      = require('morgan');
 var http        = require('http');
 var JWT         = require('./lib/jwtDecoder.js');
 var path        = require('path');
@@ -9,7 +10,7 @@ var request     = require('request');
 var routes      = require('./routes');
 var restActivity   = require('./routes/restActivity.js');
 var activityUtils    = require('./routes/activityUtils.js');
-var pkgjson = require( './package.json' );
+var pkgjson     = require( './package.json' );
 
 var app = express();
 
@@ -42,7 +43,7 @@ function tokenFromJWT( req, res, next ) {
 app.set('port', process.env.PORT | 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(express.logger('dev'));
+app.use(logger);
 app.use(express.json());
 app.use(express.urlencoded());
 app.use(express.methodOverride());
