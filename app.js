@@ -7,8 +7,8 @@ var JWT         = require('./lib/jwtDecoder');
 var path        = require('path');
 var request     = require('request');
 var routes      = require('./routes');
-var restActivity   = require('./routes/restActivity');
-var activityUtils    = require('./routes/activityUtils');
+var restActivity   = require('./routes/restActivity.js');
+var activityUtils    = require('./routes/activityUtils.js');
 var pkgjson = require( './package.json' );
 
 var app = express();
