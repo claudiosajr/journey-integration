@@ -46,12 +46,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger);
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.favicon());
 app.use(app.router);
