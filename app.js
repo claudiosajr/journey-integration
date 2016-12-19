@@ -3,6 +3,7 @@
 // -------------------
 var express     = require('express');
 var logger      = require('morgan');
+var bodyParser  = require('body-parser');
 var http        = require('http');
 var JWT         = require('./lib/jwtDecoder.js');
 var path        = require('path');
@@ -44,7 +45,12 @@ app.set('port', process.env.PORT | 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger);
-app.use(express.json());
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.favicon());

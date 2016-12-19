@@ -10,6 +10,7 @@
     "Ricardo den Haan <rdenhaanalonso@salesforce.com>"
   ],
   "dependencies": {
+    "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "fuel": "^0.6.0",
     "jwt-simple": "^0.5.1",
