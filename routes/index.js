@@ -1,7 +1,8 @@
 'use strict';
 
 // Deps
-var activity = require('./activity');
+var activityUtils = require('./activityUtils');
+var restActivity = require('./restActivity');
 
 /*
  * GET home page.
@@ -14,8 +15,8 @@ exports.index = function(req, res){
         });
     } else {
         res.render( 'index', {
-            title: 'Hello World Custom Interaction Example',
-            results: activity.logExecuteData,
+            title: 'Journey Builder Activity Example: Desk.com API',
+            results: activityUtils.logExecuteData,
         });
     }
 };
@@ -28,3 +29,4 @@ exports.login = function( req, res ) {
 exports.logout = function( req, res ) {
     req.session.token = '';
 };
+

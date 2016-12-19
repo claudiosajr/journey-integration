@@ -7,47 +7,40 @@ var JWT         = require('./lib/jwtDecoder');
 var path        = require('path');
 var request     = require('request');
 var routes      = require('./routes');
-var activity    = require('./routes/activity');
-var trigger     = require('./routes/trigger');
+var restActivity   = require('./routes/restActivity');
+var activityUtils    = require('./routes/activityUtils');
+var pkgjson = require( './package.json' );
 
 var app = express();
 
-// Register configs for the environments where the app functions
-// , these can be stored in a separate file using a module like config
 var APIKeys = {
-    appId           : '89dac0db-2a77-48fa-8787-ee5d7e2ee009',
-    clientId        : 'ioc7y3z8wlmn0h89ztgusc99',
-    clientSecret    : 'o4Cuev9FFgVPcc7PqEwyKpRe',
-    appSignature    : 'POC API integration',
-    authUrl         : 'https://auth.exacttargetapis.com/v1/requestToken?legacy=1'
+    appId           : process.env.JB_APP_ID,
+    clientId        : process.env.JB_CLIENT_ID,
+    clientSecret    : process.env.JB_CLIENT_SECRET,
+    appSignature    : process.env.JB_APP_SIGNATURE,
+    authUrl         : process.env.JB_AUTH_URL
 };
 
-// Simple custom middleware
+/**
+ * Express midlleware to encode requests using JWT.
+ * @param req
+ * @param res
+ * @param next
+ */
 function tokenFromJWT( req, res, next ) {
     // Setup the signature for decoding the JWT
     var jwt = new JWT({appSignature: APIKeys.appSignature});
-    
+
     // Object representing the data in the JWT
     var jwtData = jwt.decode( req );
-
-    // Bolt the data we need to make this call onto the session.
-    // Since the UI for this app is only used as a management console,
-    // we can get away with this. Otherwise, you should use a
-    // persistent storage system and manage tokens properly with
-    // node-fuel
     req.session.token = jwtData.token;
     next();
 }
 
-// Use the cookie-based session  middleware
-app.use(express.cookieParser());
-
-// TODO: MaxAge for cookie based on token exp?
-app.use(express.cookieSession({secret: "HelloWorld-CookieSecret"}));
 
 // Configure Express
 app.set('port', process.env.PORT || 3000);
-app.set('views', path.join('C:\Users\claudio.junior\Desktop\journey-builder', 'views'));
+app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(express.logger('dev'));
 app.use(express.json());
@@ -55,79 +48,100 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.favicon());
 app.use(app.router);
-app.use(express.static(path.join('C:\Users\claudio.junior\Desktop\journey-builder', 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Express in Development Mode
 if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+    app.use(express.errorHandler());
 }
 
-// HubExchange Routes
+/**
+ * GET /
+ * HubExchange route. Main page of the Marketing Cloud application
+ */
 app.get('/', routes.index );
+
+/**
+ * POST /login
+ * HubExchange route. Logs in to Marketing Cloud, using JWT for encryption
+ */
 app.post('/login', tokenFromJWT, routes.login );
+
+/**
+ * POST /logut
+ * HubExchange rout. Logs out from Marketing Cloud.
+ */
 app.post('/logout', routes.logout );
 
-// Custom Hello World Activity Routes
-app.post('/ixn/activities/hello-world/save/', activity.save );
-app.post('/ixn/activities/hello-world/validate/', activity.validate );
-app.post('/ixn/activities/hello-world/publish/', activity.publish );
-app.post('/ixn/activities/hello-world/execute/', activity.execute );
 
-// Custom Hello World Trigger Route
-app.post('/ixn/triggers/hello-world/', trigger.edit );
+/**
+ *  DELETE /activity-data
+ *  Clears the array 'logExecuteData', which holds the latest execution details of the activity
+ */
+app.delete('/activity-data', function( req, res ) {
+    // The client makes this request to get the data
+    activityUtils.logExecuteData = [];
+    res.send( 200 );
+});
 
-// Abstract Event Handler
-app.post('/fireEvent/:type', function( req, res ) {
-    var data = req.body;
-    var triggerIdFromAppExtensionInAppCenter = 'NToxMTQ6MA';
-    var JB_EVENT_API = 'https://www.exacttargetapis.com/interaction-experimental/v1/events';
-    var reqOpts = {};
-
-    if( 'helloWorld' !== req.params.type ) {
-        res.send( 400, 'Unknown route param: "' + req.params.type +'"' );
+/**
+ * GET /activity-data
+ * Returns the content of the array 'logExecuteData', which holds the latest execution details of the activity
+ */
+app.get('/activity-data', function( req, res ) {
+    // The client makes this request to get the data
+    if( !activityUtils.logExecuteData.length ) {
+        res.send( 200, {data: null} );
     } else {
-        // Hydrate the request
-        reqOpts = {
-            url: JB_EVENT_API,
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + req.session.token
-            },
-            body: JSON.stringify({
-                ContactKey: data.alternativeEmail,
-                EventDefinitionKey: triggerIdFromAppExtensionInAppCenter,
-                Data: data
-            })
-        };
-
-        request( reqOpts, function( error, response, body ) {
-            if( error ) {
-                console.error( 'ERROR: ', error );
-                res.send( response, 400, error );
-            } else {
-                res.send( body, 200, response);
-            }
-        }.bind( this ) );
+        res.send( 200, {data: activityUtils.logExecuteData} );
     }
 });
 
-app.get('/clearList', function( req, res ) {
-	// The client makes this request to get the data
-	activity.logExecuteData = [];
-	res.send( 200 );
-});
+/**
+ * GET /version
+ * Returns the version of the app, set in the package.json file
+ */
+app.get( '/version', function( req, res ) {
+    res.setHeader( 'content-type', 'application/json' );
+    res.send(200, JSON.stringify( {
+        version: pkgjson.version
+    } ) );
+} );
+
+/**
+ * POST /rest-activity/save
+ * Custom Activity SAVE
+ */
+app.post('/rest-activity/save', restActivity.save );
+
+/**
+ * POST /rest-activity/validate
+ * Custom Activity VALIDATE
+ */
+app.post('/rest-activity/validate', restActivity.validate );
+
+/**
+ * POST /rest-activity/publish
+ * Custom Activity PUBLISH
+ */
+app.post('/rest-activity/publish', restActivity.publish );
+
+/**
+ * POST /rest-activity/execute
+ * Custom Activity EXECUTE
+ */
+app.post('/rest-activity/execute', restActivity.execute );
+
+/**
+ * GET /rest-activity/config.json
+ * Custom Activity config.json file generation. It takes values from the node env variables (Heroku vars) to dynamically
+ * generate the correspondent config file.
+ */
+app.get('/rest-activity/config.json', restActivity.configJSON );
 
 
-// Used to populate events which have reached the activity in the interaction we created
-app.get('/getActivityData', function( req, res ) {
-	// The client makes this request to get the data
-	if( !activity.logExecuteData.length ) {
-		res.send( 200, {data: null} );
-	} else {
-		res.send( 200, {data: activity.logExecuteData} );
-	}
-});
+
 
 http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+    console.log('Express server listening on port ' + app.get('port'));
 });
