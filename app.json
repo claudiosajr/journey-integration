@@ -1,0 +1,46 @@
+{
+  "name": "infinite-anchorage-10878",
+  "description": "A barebone REST custom activity for Journey Builder",
+  "repository": "https://github.com/claudiosajr/journey-integration",
+  "logo": "https://infinite-anchorage-10878.herokuapp.com/public/rest-activity/images/node.png",
+  "keywords": ["node", "express", "Journey Builder"],
+  "scripts": {
+    "postdeploy": "bundle exec rake bootstrap"
+  },
+  "env": {
+    "JB_ACTIVITY_NAME": {
+      "description": "Default name of the CA in the JB palette",
+	    "value": "Journey Builder integration"
+    },
+    "JB_APP_ID": {
+      "description": "Application ID in AppCenter",
+	    "value": "b8ac2fe7-8be4-4e58-8948-48abfd6dbdaf"
+    },
+    "JB_APP_SIGNATURE": {
+      "description": "App Signature in AppCenter",
+	    "value": "wp3vnep3wq4dhps2jjl1bwmi5unwprp1os1sq1wg1pbmop3p0ok3nfo2asrijjdqpkjgzbbgj4actb0g5e4nhoe4nqkrozfveb30h2yjtkkbnlxecgsezvg03cyc0u0bjvhjttupuecvm4dwssca4pilaund420ppfqt1o0hjbsurdhz1dptb2wrzpmlhih2ehrt1lg1uzwjimqnmxcae4cgrqjo2jq5pzms1dofj0di022zj2v2muuqhe1ebig"
+    },
+    "JB_AUTH_URL": {
+      "description": "API Authentication URL",
+      "value": "https://auth.exacttargetapis.com/v1/requestToken?legacy=1"
+    },
+    "JB_CLIENT_ID": {
+      "description": "Client ID in AppCenter",
+	    "value": "fh7ft4bn8a2lv9p9l4k9mjak"
+    },
+    "JB_CLIENT_SECRET": {
+      "description": "Client Secret in AppCenter",
+	    "value": "smB4XxWyjYWMDK7j8CzSC6kd"
+    },
+    "JB_ACTIVITY_KEY": {
+      "description": "Activity Key in App Center",
+	    "value": "infinite-anchorage-10878"
+    }
+  },
+  "addons": [],
+  "buildpacks": [
+    {
+      "url": "https://github.com/claudiosajr/journey-integration"
+    }
+  ]
+}
