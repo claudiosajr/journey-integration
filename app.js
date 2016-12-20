@@ -142,7 +142,7 @@ app.post('/rest-activity/execute', restActivity.execute );
  * Custom Activity config.json file generation. It takes values from the node env variables (Heroku vars) to dynamically
  * generate the correspondent config file.
  */
-app.get('/rest-activity/config.json', restActivity.configJSON );
+app.get('/config.json', restActivity.configJSON );
 
 
 
