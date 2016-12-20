@@ -54,7 +54,6 @@ app.use(bodyParser.json());
 
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(favicon(__dirname + '/public/rest-activity/images/favicon.ico'));
-app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Express in Development Mode
