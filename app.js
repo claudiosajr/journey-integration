@@ -44,7 +44,6 @@ function tokenFromJWT( req, res, next ) {
 
 
 // Configure Express
-app.set('port', process.env.PORT | 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 app.use(logger);
@@ -148,6 +147,6 @@ app.get('/rest-activity/config.json', restActivity.configJSON );
 
 
 
-http.createServer(app).listen(app.get('port'), function(){
+http.createServer(app).listen(process.env.PORT || 3000, function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
