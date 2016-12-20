@@ -82,7 +82,7 @@ exports.edit = function( req, res ) {
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     //activityUtils.logData( req );
-    res.send( 200, 'Edit' );
+    res.status(200).send('Edit');
 };
 
 /**
@@ -94,7 +94,7 @@ exports.save = function( req, res ) {
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     //activityUtils.logData( req );
-    res.send( 200, 'Save' );
+    res.status(200).send('Save');
 };
 
 /**
@@ -106,7 +106,7 @@ exports.publish = function( req, res ) {
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     //activityUtils.logData( req.body );
-    res.send( 200, 'Publish' );
+    res.status(200).send('Publish');
 };
 
 /**
@@ -118,7 +118,7 @@ exports.validate = function( req, res ) {
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     //activityUtils.logData( req );
-    res.send( 200, 'Validate' );
+    res.status(200).send('Validate');
 };
 
 /**
@@ -130,7 +130,7 @@ exports.execute = function( req, res ) {
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     //activityUtils.logData( req );
-	res.send( 200, {"result":"0"});
+	res.status(200).send({"result":"0"});
 };
 
 /**
@@ -138,7 +138,7 @@ exports.execute = function( req, res ) {
  */
 exports.configJSON = function( req, res ) {
 	console.log('>>> get _config.json <<<');
-	res.send( 200, configJSON);
+	res.status(200).send(configJSON);
 };
 
 
