@@ -46,7 +46,7 @@ function tokenFromJWT( req, res, next ) {
 // Configure Express
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-app.use(logger);
+app.use('default', logger);
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
