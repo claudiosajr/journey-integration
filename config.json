@@ -1,0 +1,63 @@
+{
+    "workflowApiVersion": "1.1",
+    "metaData": {
+        "icon": "images/sms.png",
+        "iconSmall": "images/smsSmall.png",
+        "category": "message"
+    },
+    "type": "REST",
+    "lang": {
+        "en-US": {
+            "name": "infinite-anchorage-10878",
+            "description": ""
+        }
+    },
+    "arguments": {
+        "execute": {
+            "inArguments": [],
+            "outArguments": [],
+            "url": "https://infinite-anchorage-10878.herokuapp.com/execute",
+            "useJWT": true
+        }
+    },
+    "configurationArguments": {
+        "applicationExtensionKey": "<key from app center>",
+        "save": {
+            "url": "https://infinite-anchorage-10878.herokuapp.com/save"
+        },
+        "publish": {
+            "url": "https://infinite-anchorage-10878.herokuapp.com/publish"
+        },
+        "validate": {
+            "url": "https://infinite-anchorage-10878.herokuapp.com/validate"
+        }
+    },
+    "wizardSteps": [
+        { "label": "Step 1", "key": "step1" },
+        { "label": "Step 2", "key": "step2" },
+        { "label": "Step 3", "key": "step3" },
+        { "label": "Step 4", "key": "step4", "active": false }
+    ],
+    "userInterfaces": {
+        "configModal": {
+            "height": 200,
+            "width": 300,
+            "fullscreen": true
+        },
+        "runningModal": {
+            "url": "runningModal.html"
+        },
+        "runningHover": {
+            "url": "runningHover.html"
+        }
+    },
+    "schema": {
+        "arguments": {
+            "execute": {
+                "inArguments": [],
+                "outArguments": []
+            }
+        }
+    },
+    "sslNotRequired": true
+}
