@@ -6,8 +6,9 @@ var logger          = require('morgan');
 var bodyParser      = require('body-parser');
 var methodOverride  = require('method-override');
 var favicon         = require('serve-favicon');
-var errorhandler    = require('errorhandler')
+var errorhandler    = require('errorhandler');
 var http            = require('http');
+var session         = require('express-session')
 var JWT             = require('./lib/jwtDecoder.js');
 var path            = require('path');
 var request         = require('request');
@@ -19,11 +20,11 @@ var pkgjson         = require( './package.json' );
 var app = express();
 
 var APIKeys = {
-    appId           : process.env.JB_APP_ID,
-    clientId        : process.env.JB_CLIENT_ID,
-    clientSecret    : process.env.JB_CLIENT_SECRET,
-    appSignature    : process.env.JB_APP_SIGNATURE,
-    authUrl         : process.env.JB_AUTH_URL
+    appId           : "b8ac2fe7-8be4-4e58-8948-48abfd6dbdaf",
+    clientId        : "fh7ft4bn8a2lv9p9l4k9mjak",
+    clientSecret    : "smB4XxWyjYWMDK7j8CzSC6kd",
+    appSignature    : "wp3vnep3wq4dhps2jjl1bwmi5unwprp1os1sq1wg1pbmop3p0ok3nfo2asrijjdqpkjgzbbgj4actb0g5e4nhoe4nqkrozfveb30h2yjtkkbnlxecgsezvg03cyc0u0bjvhjttupuecvm4dwssca4pilaund420ppfqt1o0hjbsurdhz1dptb2wrzpmlhih2ehrt1lg1uzwjimqnmxcae4cgrqjo2jq5pzms1dofj0di022zj2v2muuqhe1ebig",
+    authUrl         : "https://auth.exacttargetapis.com/v1/requestToken?legacy=1"
 };
 
 /**
@@ -38,14 +39,14 @@ function tokenFromJWT( req, res, next ) {
 
     // Object representing the data in the JWT
     var jwtData = jwt.decode( req );
-    req.session.token = jwtData.token;
-    next();
+    req.session.token = jwtData;
+    next(); 
 }
 
 
 // Configure Express
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 app.use('default', logger);
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -54,6 +55,13 @@ app.use(bodyParser.json());
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(favicon(__dirname + '/public/rest-activity/images/favicon.ico'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: APIKeys.appSignature,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true }
+}))
 
 // Express in Development Mode
 if ('development' == app.get('env')) {
@@ -78,6 +86,21 @@ app.post('/login', tokenFromJWT, routes.login );
  */
 app.post('/logout', routes.logout );
 
+/**
+ * GET /api-keys
+ * Returns the content of the api-keys of the running application
+ */
+app.get('/api-keys', function( req, res ) {
+    // The client makes this request to get the data    
+    console.log(APIKeys.appSignature);
+    res.status( 200 ).send( { 
+        appSignature: APIKeys.appSignature, 
+        appId: APIKeys.appId,  
+        clientId: APIKeys.clientId,  
+        clientSecret: APIKeys.clientSecret,  
+        authUrl: APIKeys.authUrl
+    } );    
+});
 
 /**
  *  DELETE /activity-data
@@ -85,8 +108,8 @@ app.post('/logout', routes.logout );
  */
 app.delete('/activity-data', function( req, res ) {
     // The client makes this request to get the data
-    activityUtils.logExecuteData = [];
-    res.send( 200 );
+    activityUtils.logExecuteData = [];    
+    res.status( 200 ).send("");
 });
 
 /**
@@ -96,9 +119,9 @@ app.delete('/activity-data', function( req, res ) {
 app.get('/activity-data', function( req, res ) {
     // The client makes this request to get the data
     if( !activityUtils.logExecuteData.length ) {
-        res.send( 200, {data: null} );
+        res.status(200).send( {data: null} );
     } else {
-        res.send( 200, {data: activityUtils.logExecuteData} );
+        res.status( 200 ).send( {data: activityUtils.logExecuteData} );
     }
 });
 
@@ -108,7 +131,7 @@ app.get('/activity-data', function( req, res ) {
  */
 app.get( '/version', function( req, res ) {
     res.setHeader( 'content-type', 'application/json' );
-    res.send(200, JSON.stringify( {
+    res.status( 200 ).send( JSON.stringify( {
         version: pkgjson.version
     } ) );
 } );

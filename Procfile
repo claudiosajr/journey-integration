@@ -1,1 +1,1 @@
-web: node app /rest-activity
+web: node app

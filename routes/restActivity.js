@@ -1,10 +1,10 @@
 'use strict';
 var https = require( 'https' );
 var activityUtils = require('./activityUtils.js');
-var httpExecute = process.env.REST_EXECUTE && process.env.REST_EXECUTE.length > 0? process.env.REST_EXECUTE : "https://" + process.env.JB_ACTIVITY_KEY + ".herokuapp.com/rest-activity/execute";
-var httpSave = process.env.REST_SAVE && process.env.REST_SAVE.length > 0? process.env.REST_SAVE : "https://" + process.env.JB_ACTIVITY_KEY + ".herokuapp.com/rest-activity/save";
-var httpPublish = process.env.REST_PUBLISH && process.env.REST_PUBLISH.length > 0? process.env.REST_PUBLISH : "https://" + process.env.JB_ACTIVITY_KEY + ".herokuapp.com/rest-activity/publish";
-var httpValidate = process.env.REST_VALIDATE && process.env.REST_VALIDATE.length > 0? process.env.REST_VALIDATE : "https://" + process.env.JB_ACTIVITY_KEY + ".herokuapp.com/rest-activity/validate";
+var httpExecute = process.env.REST_EXECUTE && process.env.REST_EXECUTE.length > 0? process.env.REST_EXECUTE : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/execute";
+var httpSave = process.env.REST_SAVE && process.env.REST_SAVE.length > 0? process.env.REST_SAVE : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/save";
+var httpPublish = process.env.REST_PUBLISH && process.env.REST_PUBLISH.length > 0? process.env.REST_PUBLISH : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/publish";
+var httpValidate = process.env.REST_VALIDATE && process.env.REST_VALIDATE.length > 0? process.env.REST_VALIDATE : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/validate";
 var configJSON = {
     "workflowApiVersion": "1.1",
 		"metaData": {
@@ -15,7 +15,7 @@ var configJSON = {
 		"type": "REST",
 		"lang": {
 			"en-US": {
-				"name": process.env.JB_ACTIVITY_NAME,
+				"name": "infinite-anchorage-10878",
 				"description": ""
 			}
 		},
@@ -32,7 +32,7 @@ var configJSON = {
 			}
 		},
 		"configurationArguments": {
-			"applicationExtensionKey": process.env.JB_ACTIVITY_KEY,
+			"applicationExtensionKey": "infinite-anchorage-10878",
 			"save": {
 				"url": httpSave
 			},

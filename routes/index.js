@@ -1,8 +1,8 @@
 'use strict';
 
 // Deps
-var activityUtils = require('./activityUtils');
-var restActivity = require('./restActivity');
+var activityUtils = require('./activityUtils.js');
+var restActivity = require('./restActivity.js');
 
 /*
  * GET home page.
@@ -27,6 +27,8 @@ exports.login = function( req, res ) {
 };
 
 exports.logout = function( req, res ) {
+    console.log( 'req.body: ', req.body );
     req.session.token = '';
+    res.redirect( '/' );
 };
 
