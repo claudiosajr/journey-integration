@@ -54,7 +54,7 @@ app.use(bodyParser.json());
 
 app.use(methodOverride('X-HTTP-Method-Override'));
 app.use(favicon(__dirname + '/public/rest-activity/images/favicon.ico'));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/rest-activity')));
 
 app.use(session({
   secret: APIKeys.appSignature,
@@ -85,22 +85,6 @@ app.post('/login', tokenFromJWT, routes.login );
  * HubExchange rout. Logs out from Marketing Cloud.
  */
 app.post('/logout', routes.logout );
-
-/**
- * GET /api-keys
- * Returns the content of the api-keys of the running application
- */
-app.get('/api-keys', function( req, res ) {
-    // The client makes this request to get the data    
-    console.log(APIKeys.appSignature);
-    res.status( 200 ).send( { 
-        appSignature: APIKeys.appSignature, 
-        appId: APIKeys.appId,  
-        clientId: APIKeys.clientId,  
-        clientSecret: APIKeys.clientSecret,  
-        authUrl: APIKeys.authUrl
-    } );    
-});
 
 /**
  *  DELETE /activity-data
