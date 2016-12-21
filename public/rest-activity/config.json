@@ -8,7 +8,7 @@
     "type": "REST",
     "lang": {
         "en-US": {
-            "name": "infinite-anchorage-10878",
+            "name": "Integration Buscapé",
             "description": ""
         }
     },
@@ -21,7 +21,7 @@
         }
     },
     "configurationArguments": {
-        "applicationExtensionKey": "infinite-anchorage-10878", /* WHATS THE KEY ?? */
+        "applicationExtensionKey": "infinite-anchorage-10878",
         "save": {
             "url": "https://infinite-anchorage-10878.herokuapp.com/save"
         },
