@@ -1,117 +1,6 @@
 'use strict';
 var https = require( 'https' );
-var activityUtils = require('./activityUtils.js');
-var httpExecute = process.env.REST_EXECUTE && process.env.REST_EXECUTE.length > 0? process.env.REST_EXECUTE : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/execute";
-var httpSave = process.env.REST_SAVE && process.env.REST_SAVE.length > 0? process.env.REST_SAVE : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/save";
-var httpPublish = process.env.REST_PUBLISH && process.env.REST_PUBLISH.length > 0? process.env.REST_PUBLISH : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/publish";
-var httpValidate = process.env.REST_VALIDATE && process.env.REST_VALIDATE.length > 0? process.env.REST_VALIDATE : "https://" + "infinite-anchorage-10878" + ".herokuapp.com/rest-activity/validate";
-var configJSON = {
-    "workflowApiVersion": "1.1",
-		"metaData": {
-			"icon": "images/sms.png",
-			"iconSmall": "images/smsSmall.png",
-			"category": "message"
-		},
-		"type": "REST",
-		"lang": {
-			"en-US": {
-				"name": "infinite-anchorage-10878",
-				"description": ""
-			}
-		},
-		"arguments": {
-			"execute": {
-				"inArguments": [
-					{
-                    	"emailAddress": "{{InteractionDefaults.Email}}"
-                	},
-                	{
-	                    "phoneNumber": "{{Contact.Default.PhoneNumber}}"
-	                },
-                	{
-	                    "devideId": "{{Contact.Default.DevideId}}"
-	                }
-				],
-		        "outArguments": [
-                    {
-                        "foundSignupDate": ""
-                    }
-                ],
-				"url": httpExecute,
-				"useJWT": true
-			}
-		},
-		"configurationArguments": {
-			"applicationExtensionKey": "infinite-anchorage-10878",
-			"save": {
-				"url": httpSave
-			},
-			"publish": {
-				"url": httpPublish
-			},
-			"validate": {
-				"url": httpValidate
-			}
-		},
-		"wizardSteps": [
-			{ "label": "Step 1", "key": "step1" },
-			{ "label": "Step 2", "key": "step2" },
-			{ "label": "Step 3", "key": "step3" },
-			{ "label": "Step 4", "key": "step4", "active": false }
-		],
-		"userInterfaces": {
-			"configModal": {
-				"height": 200,
-				"width": 300,
-				"fullscreen": true
-			},
-			"runningModal": {
-				"url": "runningModal.html"
-			},
-			"runningHover": {
-				"url": "runningHover.html"
-			}
-		},
-		"schema": {
-			"arguments": {
-				"execute": {
-	                "inArguments": [
-	                    {
-	                        "emailAddress": {
-	                            "dataType": "Email",
-	                            "isNullable": true,
-	                            "direction": "in"
-	                        }
-	                    },
-	                    {
-	                        "phoneNumber": {
-	                            "dataType": "Phone",
-	                            "isNullable": true,
-	                            "direction": "in"   
-	                        }
-	                    },
-	                    {
-	                        "devideId": {
-	                            "dataType": "Device",
-	                            "isNullable": true,
-	                            "direction": "in"
-	                        }
-	                    }
-	                ],
-	                "outArguments": [
-	                    {
-	                        "foundSignupDate": {
-	                            "dataType": "Date",
-	                            "direction": "out",
-	                            "access": "visible"
-	                        }
-	                    }
-	                ]       
-                }     
-			}
-		},
-		"sslNotRequired": true
-	};
+var configjson = require( '../public/rest-activity/config.json' );
 
 /**
  * POST Handler for / route of Activity (this is the edit route).
@@ -178,7 +67,7 @@ exports.execute = function( req, res ) {
  */
 exports.configJSON = function( req, res ) {
 	console.log('>>> get _config.json <<<');
-	res.status(200).send(configJSON);
+	res.status(200).send(configjson);
 };
 
 
