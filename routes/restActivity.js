@@ -21,7 +21,17 @@ var configJSON = {
 		},
 		"arguments": {
 			"execute": {
-				"inArguments": [],
+				"inArguments": [
+					{
+                    	"emailAddress": "{{InteractionDefaults.Email}}"
+                	},
+                	{
+	                    "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+	                },
+                	{
+	                    "devideId": "{{Contact.Default.DevideId}}"
+	                }
+				],
         "outArguments": [
         	{
         		"result":""
@@ -102,7 +112,7 @@ exports.save = function( req, res ) {
  */
 exports.publish = function( req, res ) {
 	console.log('>>> PUBLISH <<<');
-	console.log(req);
+	console.log(req.body);
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
     activityUtils.logData( req );
