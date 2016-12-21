@@ -32,11 +32,11 @@ var configJSON = {
 	                    "devideId": "{{Contact.Default.DevideId}}"
 	                }
 				],
-        "outArguments": [
-        	{
-        		"result":""
-        	}
-        ],
+		        "outArguments": [
+                    {
+                        "foundSignupDate": ""
+                    }
+                ],
 				"url": httpExecute,
 				"useJWT": true
 			}
@@ -75,9 +75,39 @@ var configJSON = {
 		"schema": {
 			"arguments": {
 				"execute": {
-					"inArguments": [],
-					"outArguments": []
-				}
+	                "inArguments": [
+	                    {
+	                        "emailAddress": {
+	                            "dataType": "Email",
+	                            "isNullable": true,
+	                            "direction": "in"
+	                        }
+	                    },
+	                    {
+	                        "phoneNumber": {
+	                            "dataType": "Phone",
+	                            "isNullable": true,
+	                            "direction": "in"   
+	                        }
+	                    },
+	                    {
+	                        "devideId": {
+	                            "dataType": "Device",
+	                            "isNullable": true,
+	                            "direction": "in"
+	                        }
+	                    }
+	                ],
+	                "outArguments": [
+	                    {
+	                        "foundSignupDate": {
+	                            "dataType": "Date",
+	                            "direction": "out",
+	                            "access": "visible"
+	                        }
+	                    }
+	                ]       
+                }     
 			}
 		},
 		"sslNotRequired": true

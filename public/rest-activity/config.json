@@ -14,8 +14,22 @@
     },
     "arguments": {
         "execute": {
-            "inArguments": [],
-            "outArguments": [],
+            "inArguments": [
+                {
+                    "emailAddress": "{{InteractionDefaults.Email}}"
+                },
+                {
+                    "phoneNumber": "{{Contact.Default.PhoneNumber}}"
+                },
+                {
+                    "devideId": "{{Contact.Default.DevideId}}"
+                }
+            ],
+            "outArguments": [
+                {
+                    "foundSignupDate": ""
+                }
+            ],
             "url": "https://infinite-anchorage-10878.herokuapp.com/execute",
             "useJWT": true
         }
@@ -54,9 +68,39 @@
     "schema": {
         "arguments": {
             "execute": {
-                "inArguments": [],
-                "outArguments": []
-            }
+                "inArguments": [
+                    {
+                        "emailAddress": {
+                            "dataType": "Email",
+                            "isNullable": true,
+                            "direction": "in"
+                        }
+                    },
+                    {
+                        "phoneNumber": {
+                            "dataType": "Phone",
+                            "isNullable": true,
+                            "direction": "in"   
+                        }
+                    },
+                    {
+                        "devideId": {
+                            "dataType": "Device",
+                            "isNullable": true,
+                            "direction": "in"
+                        }
+                    }
+                ],
+                "outArguments": [
+                    {
+                        "foundSignupDate": {
+                            "dataType": "Date",
+                            "direction": "out",
+                            "access": "visible"
+                        }
+                    }
+                ]       
+            }     
         }
     },
     "sslNotRequired": true
