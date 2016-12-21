@@ -124,25 +124,25 @@ app.get( '/version', function( req, res ) {
  * POST /rest-activity/save
  * Custom Activity SAVE
  */
-app.post('/rest-activity/save', restActivity.save );
+app.post('/save', restActivity.save );
 
 /**
  * POST /rest-activity/validate
  * Custom Activity VALIDATE
  */
-app.post('/rest-activity/validate', restActivity.validate );
+app.post('/validate', restActivity.validate );
 
 /**
  * POST /rest-activity/publish
  * Custom Activity PUBLISH
  */
-app.post('/rest-activity/publish', restActivity.publish );
+app.post('/publish', restActivity.publish );
 
 /**
  * POST /rest-activity/execute
  * Custom Activity EXECUTE
  */
-app.post('/rest-activity/execute', restActivity.execute );
+app.post('/execute', restActivity.execute );
 
 /**
  * GET /rest-activity/config.json
