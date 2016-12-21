@@ -81,7 +81,7 @@ exports.edit = function( req, res ) {
 	console.log(req.body);
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
-    //activityUtils.logData( req );
+    activityUtils.logData( req );
     res.status(200).send('Edit');
 };
 
@@ -93,7 +93,7 @@ exports.save = function( req, res ) {
 	console.log(req.body);
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
-    //activityUtils.logData( req );
+    activityUtils.logData( req );
     res.status(200).send('Save');
 };
 
@@ -102,10 +102,10 @@ exports.save = function( req, res ) {
  */
 exports.publish = function( req, res ) {
 	console.log('>>> PUBLISH <<<');
-	console.log(req.body);
+	console.log(req);
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
-    //activityUtils.logData( req.body );
+    activityUtils.logData( req );
     res.status(200).send('Publish');
 };
 
@@ -117,7 +117,7 @@ exports.validate = function( req, res ) {
 	console.log(req.body);
 	// Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
-    //activityUtils.logData( req );
+    activityUtils.logData( req );
     res.status(200).send('Validate');
 };
 
@@ -129,7 +129,7 @@ exports.execute = function( req, res ) {
 	console.log(req.body);
     // Data from the req and put it in an array accessible to the main app.
     //console.log( req.body );
-    //activityUtils.logData( req );
+    activityUtils.logData( req );
 	res.status(200).send({"result":"0"});
 };
 
