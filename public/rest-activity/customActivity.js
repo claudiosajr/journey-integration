@@ -100,7 +100,7 @@ define([
             $.each(inArgument, function(key, val) {
                 if (key === 'message') {
                     message = val;
-                }
+                } 
             });
         });
 
@@ -158,7 +158,7 @@ define([
 
     function onClickedNext () {
         console.log('Postmonger - clickedNext', currentStep.key);
-        if ((currentStep.key === 'step2' && steps[3].active === false) || currentStep.key === 'step4') {
+        if ((currentStep.key === 'step3' && steps[3].active === false) || currentStep.key === 'step4') {
             save();
         } else {
             connection.trigger('nextStep');
