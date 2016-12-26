@@ -12,7 +12,7 @@ define([
     var steps = [ // initialize to the same value as what's set in _config.json for consistency
         { 'label': 'Message Selection', 'key': 'step1' },
         { 'label': 'Message Preview', 'key': 'step2' },
-        { 'label': 'Payload Preview', 'key': 'step3' },
+        { 'label': 'Payload Preview', 'key': 'step3', 'active': false },
         { 'label': 'Step 4', 'key': 'step4', 'active': false }
     ];
     var currentStep = null;
@@ -158,7 +158,7 @@ define([
 
     function onClickedNext () {
         console.log('Postmonger - clickedNext', currentStep.key);
-        if ((currentStep.key === 'step3' && steps[3].active === false) || currentStep.key === 'step4') {
+        if ((currentStep.key === 'step2' && steps[3].active === false) || currentStep.key === 'step4') {
             save();
         } else {
             connection.trigger('nextStep');
@@ -223,8 +223,10 @@ define([
                 $('#step2').show();
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 connection.trigger('updateButton', { button: 'next', text: 'next', visible: true });
+
+                preparePayload();
                 break;
-            case 'step3':
+/*            case 'step3':
                 $('#step3').show();
 
                 preparePayload();
@@ -236,7 +238,7 @@ define([
             case 'step4':
                 $('#step4').show();
                 break;
-
+*/
         }
     }
 
@@ -268,8 +270,7 @@ define([
 
         //1.b) Configure inArguments from the UI (end user manual config)
         var value = getMessage();
-        var testValue = 'teste';
-        inArgumentsArray.push({ 'message': value, 'testKey': testValue });
+        inArgumentsArray.push({ 'message': value });
         schemaInArgumentsArray.push({ 'message': {'dataType': 'Text', 'isNullable':false, 'direction':'in'}});
 
         //1.c) Set all inArguments in the payload
