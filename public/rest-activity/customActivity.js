@@ -10,9 +10,9 @@ define([
     var schemaPayload = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in _config.json for consistency
-        { 'label': 'Message', 'key': 'step1' },
-        { 'label': 'Preview', 'key': 'step2' },
-        { 'label': 'Step 3', 'key': 'step3', 'active': false },
+        { 'label': 'Message Selection', 'key': 'step1' },
+        { 'label': 'Message Preview', 'key': 'step2' },
+        { 'label': 'Payload Preview', 'key': 'step3' },
         { 'label': 'Step 4', 'key': 'step4', 'active': false }
     ];
     var currentStep = null;
@@ -63,6 +63,8 @@ define([
             connection.trigger('updateSteps', steps);
         });
 */
+        connection.trigger('updateSteps', steps);
+
         $('#payload').on('change',onPayloadChanged);
         $('#payload').on('keyup',onPayloadChanged);
     }
@@ -106,7 +108,7 @@ define([
             // If there is a message, fill things in, and if no default was specified, jump to last step
             $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
             $('#message').html(message);
-            showStep(null, 1);
+            showStep(null, 3);
         } else {
             showStep(null, 1);
         }
@@ -221,8 +223,10 @@ define([
                 $('#step2').show();
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 connection.trigger('updateButton', { button: 'next', text: 'next', visible: true });
+
+                preparePayload();
                 break;
-/*            case 'step3':
+            case 'step3':
                 $('#step3').show();
 
                 preparePayload();
@@ -234,7 +238,7 @@ define([
             case 'step4':
                 $('#step4').show();
                 break;
-*/
+
         }
     }
 
