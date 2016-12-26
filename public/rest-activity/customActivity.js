@@ -223,8 +223,6 @@ define([
                 $('#step2').show();
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 connection.trigger('updateButton', { button: 'next', text: 'next', visible: true });
-
-                preparePayload();
                 break;
             case 'step3':
                 $('#step3').show();
