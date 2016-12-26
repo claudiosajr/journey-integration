@@ -142,7 +142,7 @@ app.post('/publish', restActivity.publish );
  * POST /rest-activity/execute
  * Custom Activity EXECUTE
  */
-app.post('/rest-activity/execute', restActivity.execute );
+app.post('/execute', restActivity.execute );
 
 /**
  * GET /rest-activity/config.json
