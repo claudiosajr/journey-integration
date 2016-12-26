@@ -12,7 +12,7 @@ define([
     var steps = [ // initialize to the same value as what's set in _config.json for consistency
         { 'label': 'Message', 'key': 'step1' },
         { 'label': 'Preview', 'key': 'step2' },
-        { 'label': 'Step 3', 'key': 'step3', 'active': false },
+        { 'label': 'Step 3', 'key': 'step3' },
         { 'label': 'Step 4', 'key': 'step4', 'active': false }
     ];
     var currentStep = null;
@@ -58,7 +58,7 @@ define([
         // Toggle step 4 active/inactive (if inactive, wizard hides it and skips over it during navigation
         $('#toggleLastStep').click(function() {
             lastStepEnabled = !lastStepEnabled; // toggle status
-            steps[2].active = !steps[2].active; // toggle active
+            steps[3].active = !steps[3].active; // toggle active
 
             connection.trigger('updateSteps', steps);
         });
@@ -106,7 +106,7 @@ define([
             // If there is a message, fill things in, and if no default was specified, jump to last step
             $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
             $('#message').html(message);
-            showStep(null, 2);
+            showStep(null, 3);
         } else {
             showStep(null, 1);
         }
@@ -222,7 +222,7 @@ define([
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 connection.trigger('updateButton', { button: 'next', text: 'next', visible: true });
                 break;
-            /*case 'step3':
+            case 'step3':
                 $('#step3').show();
 
                 preparePayload();
@@ -231,7 +231,6 @@ define([
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 updateStep3NextButton(true);
                 break;
-            */
             case 'step4':
                 $('#step4').show();
                 break;
@@ -266,7 +265,7 @@ define([
 
         //1.b) Configure inArguments from the UI (end user manual config)
         var value = getMessage();
-        inArgumentsArray.push({ 'message': value, 'testKey': 'testValue'  });
+        inArgumentsArray.push({ 'message': value });
         schemaInArgumentsArray.push({ 'message': {'dataType': 'Text', 'isNullable':false, 'direction':'in'}});
 
         //1.c) Set all inArguments in the payload
