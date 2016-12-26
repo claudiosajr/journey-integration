@@ -1,5 +1,6 @@
 'use strict';
 var https = require( 'https' );
+var activityUtils = require('./activityUtils');
 var configjson = require( '../public/rest-activity/config.json' );
 
 /**
@@ -66,7 +67,7 @@ exports.execute = function( req, res ) {
  *  GET config.json. Instead of using a static field, we build the initial config.json file using the variables from Heroku.
  */
 exports.configJSON = function( req, res ) {
-	console.log('>>> get _config.json <<<');
+	console.log('>>> get config.json <<<');
 	res.status(200).send(configjson);
 };
 
