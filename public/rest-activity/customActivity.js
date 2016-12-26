@@ -10,9 +10,9 @@ define([
     var schemaPayload = [];
     var lastStepEnabled = false;
     var steps = [ // initialize to the same value as what's set in _config.json for consistency
-        { 'label': 'Step 1', 'key': 'step1' },
-        { 'label': 'Step 2', 'key': 'step2' },
-        { 'label': 'Step 3', 'key': 'step3' },
+        { 'label': 'Message', 'key': 'step1' },
+        { 'label': 'Preview', 'key': 'step2' },
+        { 'label': 'Step 3', 'key': 'step3', 'active': false },
         { 'label': 'Step 4', 'key': 'step4', 'active': false }
     ];
     var currentStep = null;
@@ -106,7 +106,7 @@ define([
             // If there is a message, fill things in, and if no default was specified, jump to last step
             $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
             $('#message').html(message);
-            showStep(null, 3);
+            showStep(null, 2);
         } else {
             showStep(null, 1);
         }
@@ -222,7 +222,7 @@ define([
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 connection.trigger('updateButton', { button: 'next', text: 'next', visible: true });
                 break;
-            case 'step3':
+            /*case 'step3':
                 $('#step3').show();
 
                 preparePayload();
@@ -231,6 +231,7 @@ define([
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 updateStep3NextButton(true);
                 break;
+            */
             case 'step4':
                 $('#step4').show();
                 break;
@@ -284,7 +285,7 @@ define([
 
         //3) Set other payload values
         var name = $('#select1').find('option:selected').html();
-        payload.name = 'CA-' + name;
+        payload.name = 'Push ' + name;
         payload['metaData'].isConfigured = true;
 
         console.log('preparePayload', payload);
@@ -297,6 +298,6 @@ define([
 
     function getMessage() {
         //console.log('getMessage');
-        return $('#select1').find('option:selected').attr('value').trim();
+        return $('#select1').find('option:selected').attr('value').trim() + "1";
     }
 });

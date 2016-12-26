@@ -8,7 +8,7 @@
   "author": "SalesForce Marketing Cloud, Dev Advocate Team",
   "contributors": [
     "Ricardo den Haan <rdenhaanalonso@salesforce.com>",
-	"Claudio Sá Junior <claudio.junior@buscapecompany.com>"
+	  "Claudio Sá Junior <claudio.junior@buscapecompany.com>"
   ],
   "dependencies": {
     "body-parser": "^1.15.2",
