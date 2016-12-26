@@ -265,7 +265,8 @@ define([
 
         //1.b) Configure inArguments from the UI (end user manual config)
         var value = getMessage();
-        inArgumentsArray.push({ 'message': value });
+        var testValue = 'teste';
+        inArgumentsArray.push({ 'message': value, 'testKey': testValue });
         schemaInArgumentsArray.push({ 'message': {'dataType': 'Text', 'isNullable':false, 'direction':'in'}});
 
         //1.c) Set all inArguments in the payload
