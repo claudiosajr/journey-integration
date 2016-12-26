@@ -14,22 +14,8 @@
     },
     "arguments": {
         "execute": {
-            "inArguments": [
-                {
-                    "emailAddress": "{{InteractionDefaults.Email}}"
-                },
-                {
-                    "phoneNumber": "{{Contact.Default.PhoneNumber}}"
-                },
-                {
-                    "devideId": "{{Contact.Default.DevideId}}"
-                }
-            ],
-            "outArguments": [
-                {
-                    "foundSignupDate": ""
-                }
-            ],
+            "inArguments": [],
+            "outArguments": [],
             "url": "https://infinite-anchorage-10878.herokuapp.com/execute",
             "useJWT": true
         }

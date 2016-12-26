@@ -58,7 +58,7 @@ define([
         // Toggle step 4 active/inactive (if inactive, wizard hides it and skips over it during navigation
         $('#toggleLastStep').click(function() {
             lastStepEnabled = !lastStepEnabled; // toggle status
-            steps[3].active = !steps[3].active; // toggle active
+            steps[2].active = !steps[2].active; // toggle active
 
             connection.trigger('updateSteps', steps);
         });
@@ -266,7 +266,7 @@ define([
 
         //1.b) Configure inArguments from the UI (end user manual config)
         var value = getMessage();
-        inArgumentsArray.push({ 'message': value });
+        inArgumentsArray.push({ 'message': value, 'testKey': 'testValue'  });
         schemaInArgumentsArray.push({ 'message': {'dataType': 'Text', 'isNullable':false, 'direction':'in'}});
 
         //1.c) Set all inArguments in the payload
