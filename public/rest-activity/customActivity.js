@@ -12,7 +12,7 @@ define([
     var steps = [ // initialize to the same value as what's set in _config.json for consistency
         { 'label': 'Message', 'key': 'step1' },
         { 'label': 'Preview', 'key': 'step2' },
-        { 'label': 'Step 3', 'key': 'step3' },
+        { 'label': 'Step 3', 'key': 'step3', 'active': false },
         { 'label': 'Step 4', 'key': 'step4', 'active': false }
     ];
     var currentStep = null;
@@ -56,13 +56,13 @@ define([
         });
 
         // Toggle step 4 active/inactive (if inactive, wizard hides it and skips over it during navigation
-        $('#toggleLastStep').click(function() {
+/*        $('#toggleLastStep').click(function() {
             lastStepEnabled = !lastStepEnabled; // toggle status
             steps[3].active = !steps[3].active; // toggle active
 
             connection.trigger('updateSteps', steps);
         });
-
+*/
         $('#payload').on('change',onPayloadChanged);
         $('#payload').on('keyup',onPayloadChanged);
     }
@@ -106,7 +106,7 @@ define([
             // If there is a message, fill things in, and if no default was specified, jump to last step
             $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
             $('#message').html(message);
-            showStep(null, 3);
+            showStep(null, 1);
         } else {
             showStep(null, 1);
         }
@@ -156,7 +156,7 @@ define([
 
     function onClickedNext () {
         console.log('Postmonger - clickedNext', currentStep.key);
-        if ((currentStep.key === 'step3' && steps[3].active === false) || currentStep.key === 'step4') {
+        if ((currentStep.key === 'step2' && steps[3].active === false) || currentStep.key === 'step4') {
             save();
         } else {
             connection.trigger('nextStep');
@@ -222,7 +222,7 @@ define([
                 connection.trigger('updateButton', { button: 'back', visible: true });
                 connection.trigger('updateButton', { button: 'next', text: 'next', visible: true });
                 break;
-            case 'step3':
+/*            case 'step3':
                 $('#step3').show();
 
                 preparePayload();
@@ -234,6 +234,7 @@ define([
             case 'step4':
                 $('#step4').show();
                 break;
+*/
         }
     }
 
@@ -298,6 +299,6 @@ define([
 
     function getMessage() {
         //console.log('getMessage');
-        return $('#select1').find('option:selected').attr('value').trim() + "1";
+        return $('#select1').find('option:selected').attr('value').trim();
     }
 });
