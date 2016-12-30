@@ -49,10 +49,10 @@ define([
 
         // Disable the next button if a value isn't selected
         $('#select1').change(function() {
-            var message = getMessage();
-            connection.trigger('updateButton', { button: 'next', enabled: Boolean(message) });
+            var messageId = getMessageId();
+            connection.trigger('updateButton', { button: 'next', enabled: Boolean(messageId) });
 
-            $('#message').html(message);
+            $('#messageId').html(messageId);
         });
 
         // Toggle step 4 active/inactive (if inactive, wizard hides it and skips over it during navigation
@@ -86,7 +86,7 @@ define([
             $( '#initialPayload' ).text( 'initActivity contained no data' );
         }
 
-        var message;
+        var messageId;
         var hasInArguments = Boolean(
             payload['arguments'] &&
             payload['arguments'].execute &&
@@ -98,16 +98,16 @@ define([
 
         $.each(inArguments, function(index, inArgument) {
             $.each(inArgument, function(key, val) {
-                if (key === 'message') {
-                    message = val;
+                if (key === 'messageId') {
+                    messageId = val;
                 } 
             });
         });
 
-        if (message) {
+        if (messageId) {
             // If there is a message, fill things in, and if no default was specified, jump to last step
-            $('#select1').find('option[value='+ message +']').attr('selected', 'selected');
-            $('#message').html(message);
+            $('#select1').find('option[value='+ messageId +']').attr('selected', 'selected');
+            $('#messageId').html(messageId);
             showStep(null, 3);
         } else {
             showStep(null, 1);
@@ -216,7 +216,7 @@ define([
         switch(step.key) {
             case 'step1':
                 $('#step1').show();
-                connection.trigger('updateButton', { button: 'next', enabled: Boolean(getMessage()) });
+                connection.trigger('updateButton', { button: 'next', enabled: Boolean(getMessageId()) });
                 connection.trigger('updateButton', { button: 'back', visible: false });
                 break;
             case 'step2':
@@ -300,8 +300,8 @@ define([
         connection.trigger('updateActivity', payload);
     }
 
-    function getMessage() {
-        //console.log('getMessage');
+    function getMessageId() {
+        //console.log('getMessageId');
         return $('#select1').find('option:selected').attr('value').trim();
     }
 });
